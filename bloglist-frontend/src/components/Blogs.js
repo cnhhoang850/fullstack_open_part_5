@@ -1,10 +1,25 @@
-import React from 'react'
+import React, {useState} from 'react'
 
-const Blogs = ({user, title, author, url, setAuthor, setTitle, setUrl, handleLogout, handleCreate}) => (
+const BlogForm = ({createBlog}) => {
+    const [title, setTitle] = useState('')
+    const [author, setAuthor] = useState('')
+    const [url, setUrl] = useState('')
+
+    const handleCreate = (event) => {
+        event.preventDefault()
+
+        createBlog({
+            title: title,
+            author: author,
+            url: url
+        })
+        
+        setTitle('')
+        setAuthor('')
+        setUrl('')
+    }
+    return (
     <div>
-      <h2>blogs</h2>
-      <p>{user.username} logged in <button onClick={handleLogout}>logout</button></p>
-
       <h2>create new</h2>
       <form onSubmit = {handleCreate}>
         <div>
@@ -38,6 +53,6 @@ const Blogs = ({user, title, author, url, setAuthor, setTitle, setUrl, handleLog
       </form>
       
     </div>
-)
+)}
 
-export default Blogs
+export default BlogForm

@@ -1,6 +1,18 @@
-import React from 'react'
+import React, {useState} from 'react'
 
-const Login = ({handleLogin, username, password, setUsername, setPassword}) => {
+const Login = ({login}) => {
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
+    const handleLogin = (event) => {
+        event.preventDefault()
+
+        login(username, password)
+
+        setUsername('')
+        setPassword('')
+    }
+
     return (
     <div>
           <h2>Log in to the application</h2>
