@@ -51,7 +51,8 @@ const App = () => {
     }
   }
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, blog) => {
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
       await blogService.remove(id)
 
       setNotiMessage(`post deleted.`)
@@ -60,6 +61,7 @@ const App = () => {
       }, 5000)
 
       blogService.getAll().then(blogs => setBlogs( blogs ))
+    }
   }
 
   const handleLogout = (event) => {
@@ -69,6 +71,31 @@ const App = () => {
   }
 
   const createBlog = async (post) => {
+    if (!post.title || ! post.url) {
+      setNotiMessage(`please set both url and title.`)
+      setTimeout(() => {
+        setNotiMessage(null)
+      }, 5000)
+      return null
+    } 
+
+    let uniqeUrl = blogs.map(blog => blog.url)
+    let uniqeTitle = blogs.map(blog => blog.title)
+
+    if (uniqeTitle.includes(post.title)) {
+      setNotiMessage(`title used please use another.`)
+      setTimeout(() => {
+        setNotiMessage(null)
+      }, 5000)
+      return null
+    } else if (uniqeUrl.includes(post.url)) {
+      setNotiMessage(`url used please use another.`)
+      setTimeout(() => {
+        setNotiMessage(null)
+      }, 5000)
+      return null
+    }
+
     blogFormRef.current.toggleVisibility()
     await blogService.create(post)
 
@@ -91,6 +118,10 @@ const App = () => {
     )
   }
 
+  let sortedBlogs = blogs.sort(function (a, b) {
+    return b.likes - a.likes
+  })
+
   return (
     <>
     {notiMessage === '' ? <></> : <Notification message={notiMessage}/>}
@@ -104,8 +135,12 @@ const App = () => {
 
     {blogs.length === 0 
   ? `${user.username} has no blog post`
-  : blogs.map(blog =>
-    <Blog key={blog.id} blog={blog} deletePost={() => handleDelete(blog.id)} />
+  : sortedBlogs.map(blog =>
+    <Blog 
+    key={blog.id} 
+    blog={blog} 
+    deletePost={() => handleDelete(blog.id, blog)}
+     />
   )}
   </div>
   </>
