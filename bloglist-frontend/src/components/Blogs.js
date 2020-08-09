@@ -19,12 +19,13 @@ const BlogForm = ({createBlog}) => {
         setUrl('')
     }
     return (
-    <div>
+    <div >
       <h2>create new</h2>
-      <form onSubmit = {handleCreate}>
+      <form onSubmit = {handleCreate} className="formDiv">
         <div>
             title: 
             <input
+            className="title"
             type = "text"
             value = {title}
             name = "Title"
@@ -34,6 +35,7 @@ const BlogForm = ({createBlog}) => {
         <div>
             author: 
             <input
+            className="author"
             type = "text"
             value = {author}
             name = "Author"
@@ -43,6 +45,7 @@ const BlogForm = ({createBlog}) => {
         <div>
             url: 
             <input
+            className="url"
             type = "text"
             value = {url}
             name = "Url"

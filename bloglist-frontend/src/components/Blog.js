@@ -27,31 +27,35 @@ const Blog = ({ blog, deletePost }) => {
   const toggleVisibility = () => {
     return setVisible(!visible)
   }
+  if (!visible) {
   return (
-  <div style={blogStyle}>
-    <div style={hideWhenVisible}>
+  <div style={blogStyle} className='blog'>
+    <div>
       <b>{blog.title} {blog.author}</b>
       <button onClick={toggleVisibility}>
       view
       </button>
     </div>
-    <div style={showWhenVisible}>
-        <div>
-        {blog.title} <button onClick={toggleVisibility}>hide</button>
-        </div>
-        <div>
-        {blog.url}
-        </div>
-        <div>
-        likes {likes} <button onClick={() => likePost(blog.id, blog)}>like</button>
-        </div>
-        <div>
-        {blog.author}
-        </div>
-      <button onClick={deletePost}>delete</button>
+  </div> )
+  } else {
+    return (
+    <div style={blogStyle}>
+    <div className="title">
+    {blog.title} <button onClick={toggleVisibility}>hide</button>
     </div>
+    <div className="url">
+    {blog.url}
+    </div>
+    <div className="likes">
+    likes {likes} <button onClick={() => likePost(blog.id, blog)}>like</button>
+    </div>
+    <div className="author"> 
+    {blog.author}
+    </div>
+  <button onClick={deletePost}>delete</button>
   </div>
-  )
+    )
+  }
 }
 
 export default Blog
