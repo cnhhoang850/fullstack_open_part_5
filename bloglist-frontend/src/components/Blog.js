@@ -13,9 +13,6 @@ const Blog = ({ blog, deletePost }) => {
     marginBottom: 5
   }
 
-  const hideWhenVisible = {display: visible ? 'none' : ''}
-  const showWhenVisible = {display: visible ? '' : 'none'}
-
   const likePost = async  (id, blog) => {
     blog.likes += 1
     console.log(id)
@@ -32,14 +29,14 @@ const Blog = ({ blog, deletePost }) => {
   <div style={blogStyle} className='blog'>
     <div>
       <b>{blog.title} {blog.author}</b>
-      <button onClick={toggleVisibility}>
+      <button onClick={toggleVisibility} className="view">
       view
       </button>
     </div>
   </div> )
   } else {
     return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
     <div className="title">
     {blog.title} <button onClick={toggleVisibility}>hide</button>
     </div>
